@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserMapper">
+	<!-- 公共部分SQL(分页) -->
+	<sql id="paged_sql">
+		<if test="pageSize!=null"><!-- 页大小不为空 -->
+			<if test="offset!=null">limit #{offset},#{pageSize}</if><!-- 偏移位置也不为空 -->
+			<if test="offset==null">limit #{pageSize}</if>  <!-- 偏移位置也为空,缺省为从0开始 -->
+		</if>
+	</sql>
+	   
+	<!-- 分页查询用户 -->    
+	<select id="findUser" parameterType="java.util.Map" resultType="com.domian.User">
+		select * from User
+		<include refid="paged_sql"></include>
+	</select>
+	
+	<!-- 总记录数 -->
+	<select id="countUser" resultType="int">
+		SELECT COUNT(*) FROM user
+	</select>
+	
+	<!-- 通过id删除 -->
+	<delete id="deleteUser" parameterType="int">
+		delete from user where id = #{id}
+	</delete>
+	
+	<!-- 通过id修改 -->
+	<update id="updateUser" parameterType="Map" >
+        update user set userName=#{userName},userAge=#{userAge} where id=#{id}
+    </update>	
+    
+    <select id="test" resultType="map">
+    	select id,name from test
+    </select>
+    
+</mapper>   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

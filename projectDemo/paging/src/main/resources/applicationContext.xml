@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/util
+         http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/data/jpa
+         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+	<!-- 配置数据源 ,连接池用的阿里druid-->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8"/>
+		<property name="username" value="root"/>
+		<property name="password" value="123456"/>
+	</bean>
+
+	<!-- 配置mybatis的sqlSessionFactory -->
+	<bean id="sql" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+		
+		<property name="configLocation" value="classpath:MyBatisConfig.xml"></property>
+		
+		<!-- 自动扫描所有mapper文件 -->
+		<property name="mapperLocations" value="classpath*:mappers/*Mapper.xml"></property>
+		<!-- 配置别名 -->
+		<!-- <property name="typeAliasesPackage" value="domain" /> -->
+	</bean>
+
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean id="aaaaaaaaaaa" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.dao" ></property>
+		<property name="sqlSessionFactory" ref="sql"></property>
+	</bean>
+    
+   <!-- 自动扫描 -->
+	<context:component-scan base-package="com.dao" />
+	<context:component-scan base-package="com.serviceImpl" />
+</beans>

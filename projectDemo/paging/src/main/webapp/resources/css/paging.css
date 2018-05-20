@@ -1,0 +1,4 @@
+*{margin: 0;padding: 0;}
+table{margin: 0 auto;border-collapse:collapse; border-top: 1px solid #000; border-left: 1px solid #000; width: 400px;}
+td{border-bottom: 1px solid #000;border-right: 1px solid #000;}
+.tr{background-color: red;}

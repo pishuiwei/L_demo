@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserMapper">
+	<!-- 插入数据 -->
+	<insert id="addUser" parameterType="Map"  keyProperty="id" useGeneratedKeys="true" statementType="PREPARED">
+		insert into user(name,age) values(#{name},#{age})
+	</insert>
+	
+	<!-- 通过id删除 -->
+	<delete id="deleteUser" parameterType="int">
+		delete from user where id = #{id}
+	</delete>
+	
+	<!-- 修改 -->	
+	<update id="updateUser" parameterType="Map" >
+        update user set userName=#{name},userAge=#{age} where id=#{id}
+    </update>
+    
+    <!-- 查询[依次为方法名、传入的参数类型、返回值类型] -->
+	<!-- #{id}中的id标识User中的id -->
+	<select id="findById" parameterType="int" resultType="com.domian.User">
+		select * from User where id=#{id}
+	</select>
+	
+	<!-- 查询出自定义类型的数据集 -->
+	<select id="userAll" resultType="com.dto.UserDto">
+		select name,age from user
+	</select>
+	
+	
+	
+	<!-- 动态sql -->
+	<!-- 	
+	<select id="">
+	
+		条件判断
+		<if test=""></if>
+		
+		多条件判断,相当于if else
+		<choose>
+			<when test=""></when>
+			<when test=""></when>
+		</choose>
+		
+		代替where 关键字
+		<where></where>
+		
+		代替set关键字
+		<set></set>
+		
+		trim 是更灵活用来去处多余关键字的标签，它可以用来实现 where 和 set 的效果
+		<trim prefix="WHERE" prefixOverrides="AND|OR "></trim>
+		prefix 前缀添加
+		suffix 后缀添加
+		prefixOverrides 自动判断前置
+		suffixOverrides 自动判断后置
+	</select>
+
+	
+	<foreach>标签有循环的功能，可以用来生成有规律的SQL语句，主要属性有：
+	item：表示集合每一个元素进行迭代时的别名
+	index：表示在迭代过程中，每次迭代到的位置
+	open：表示该语句已什么开始
+	separator：表示每次迭代之间以什么符号作为分隔
+	close：表示该语句已什么结束
+	collection：需要迭代的变量
+	
+	<select id="selectPostIn" resultType="domain.blog.Post">
+		SELECT *
+		FROM POST P
+		WHERE ID in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select> -->
+	
+	<!-- 	
+	<sql id="paged_sql">
+		<if test="pageSize!=null"> 页大小不为空 
+			<if test="offset!=null">limit #{offset},#{pageSize}</if> 偏移位置也不为空
+			<if test="offset==null">limit #{pageSize}</if>  偏移位置也为空,缺省为从0开始 
+		</if>
+	</sql>
+	<include refid="paged_sql"></include>
+	
+	<![CDATA[]]>
+	 -->
+	 
+	 
+	
+	
+</mapper>   
+
+
+
+  
